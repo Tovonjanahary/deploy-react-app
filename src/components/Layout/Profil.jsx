@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { UserState } from '../../context/GlobalState';
 
 const Profil = () => {
   const { userInfo } = UserState();
+  const [imgSrc, setImgSrc] = useState(`/img/${userInfo.photo}`);
 
   const logout = (e) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ const Profil = () => {
       { 
         userInfo && (
           <div>
-            <img style={{ borderRadius: "50%" }} width="50px" height="50px" src={`/img/${userInfo.photo}`} alt="profil" className='m-auto' />
+            <img style={{ borderRadius: "50%" }} width="50px" height="50px" src={imgSrc} alt="profil" className='m-auto' onError = {() => setImgSrc("/img/img.png")}/>
             <h6 className='text-center mt-2'>{userInfo.name} {userInfo.firstName}</h6>
             <h3 className='text-center mt-1'>{userInfo.jobTitle}</h3>
             <button className=' m-auto border-black rounded-lg p-1 mt-2' style={{ width:"100%", border:"1px solid black" }}><Link to={`/user/profile/${userInfo._id}`}>voir le profil</Link></button>

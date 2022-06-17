@@ -14,20 +14,6 @@ const Service = () => {
     <div className="bg-gray-200 flex justify-center" >
       <div className="max-w-md sm:max-w-xl lg:max-w-full mx-0 lg:py-5 lg:px-5">
         <div className="xl:max-w-lg xl:ml-auto">
-          <div className="mb-5">
-
-            <label className="inline-block  uppercase tracking-wider bg-indigo-400 px-4 py-3 h-xl text-gray-700 text-sm font-bold mx-0">
-              Search
-            </label>
-            <input
-              placeholder=" education,home service,sport"
-              autoComplete="off"
-              className="shadow py-2 px-3 border border-transparent focus:outline-none focus:border-transparent text-gray-700"
-              type="text"
-              id="username"
-              name="username"
-            />
-          </div>
           {error && <div>{error}</div>}
           { isPending && <Skeleton/> }       
           {data && data.filter(u => u.jobTitle != null && userInfo._id !== u._id).map((service) => (

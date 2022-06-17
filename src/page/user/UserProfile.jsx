@@ -23,20 +23,26 @@ const UserProfile = () => {
   const handleClose = () => setOpen(false);
   const { path, url } = useRouteMatch();
   const currentUser = userInfo._id === userid;
+  const [imgSrc, setImgSrc] = useState(`/img/${userInfo.photo}`);
 
   useEffect(() => {
-    const abortController = new AbortController();
-    (async function getUserProfile() {
-      const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`
-        }
-      }, { signal: abortController.signal }
-      )
-      setuseDetails(data);
-    })();
+    try {
+      const abortController = new AbortController();
+      (async function getUserProfile() {
+        const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`
+          }
+        }, { signal: abortController.signal }
+        )
+        setuseDetails(data);
+      })();
 
     return () => abortController.abort();
+    } catch (error) {
+      console.log(error);
+    }
+    
   }, [userid, userInfo]);
 
   return (
@@ -45,7 +51,7 @@ const UserProfile = () => {
         <div className="">
           <div className="flex flex-row justify-center items-center pt-3">
             <section>
-              <img src={`/img/${userDetails.photo}`} alt={userDetails.name} width="150px" height="150px" style={{ borderRadius: "50%" }} className="mt-2 m-auto border-2 border-white" />
+              <img src={imgSrc} onError = {() => setImgSrc("/img/img.png")} alt={userDetails.name} width="150px" height="150px" style={{ borderRadius: "50%" }} className="mt-2 m-auto border-2 border-white" />
               <section>
                 <div className='flex flex-row items-center w-96 justify-between mt-3'>
                   <section>

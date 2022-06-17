@@ -34,4 +34,5 @@ router.get('/users/getUser', userController.getUser);
 router.get('/users/getSingleUser/:id', userController.getSingleUser);
 router.delete('/users/deleteUser/:id', protection, userController.deleteUser);
 router.patch('/users/updateUser/:id', protection, userController.updateUser);
+
 module.exports = router;
