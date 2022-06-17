@@ -3,6 +3,8 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
+
+// deployement
 app.use(express.static(path.join(__dirname, '..',"build")))
 
 app.get('*', function (req, res) {
