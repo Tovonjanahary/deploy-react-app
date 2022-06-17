@@ -12,7 +12,7 @@
 /build
 
 # backend dependencies
-/backend/node_modules
+/back/node_modules
 # misc
 .DS_Store
 .env.local
