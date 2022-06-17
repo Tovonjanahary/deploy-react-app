@@ -19,17 +19,17 @@ function App() {
         <Inscription />
       </Route>
       <Route path="/user/signup">
-        <Signup/>
+        <Signup />
       </Route>
       <Route path="/user/signin">
-        <Signin/>
+        <Signin />
       </Route>
       <Route path="/user/profile/:userid">
-        <UserProfile/>
+        <UserProfile />
       </Route>
       <Route exact path="/details/:id">
         <Details />
-      </Route>        
+      </Route>
       <Route exact path="/services">
         <Service />
       </Route>

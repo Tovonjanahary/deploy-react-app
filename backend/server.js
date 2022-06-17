@@ -1,8 +1,23 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
+const userRouter = require('./routes/userRoutes');
+const postRouter = require('./routes/postRoutes');
+const userJobRouter = require('./routes/userJobRoutes');
+const DBConnection = require('./config/DBConnection');
+const cors = require('cors');
 
 const app = express();
+
+// connect to the database
+DBConnection();
+
+// middleware
+app.use(cors());
+app.use(express.json());
+app.use(userRouter);
+app.use(postRouter);
+app.use(userJobRouter)
 
 // deployement
 app.use(express.static(path.join(__dirname, '..',"build")))
