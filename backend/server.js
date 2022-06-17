@@ -7,10 +7,9 @@ const userJobRouter = require('./routes/userJobRoutes');
 const DBConnection = require('./config/DBConnection');
 const cors = require('cors');
 
-const app = express();
-
 // connect to the database
 DBConnection();
+const app = express();
 
 // middleware
 app.use(cors());
