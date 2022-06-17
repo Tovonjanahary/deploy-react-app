@@ -5,14 +5,13 @@ require('dotenv').config();
 // const postRouter = require('./routes/postRoutes');
 // const userJobRouter = require('./routes/userJobRoutes');
 // const DBConnection = require('./config/DBConnection');
-const cors = require('cors');
-
+// const cors = require('cors')
 // connect to the database
 // DBConnection();
 const app = express();
 
 // middleware
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 // app.use(userRouter);
 // app.use(postRouter);
