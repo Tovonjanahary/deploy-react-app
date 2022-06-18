@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = useState({ left: false });
   const [searchResult, setSearchResult] = useState([]);
+  const [error, setError] = useState(false);
 
   const searchUser = async (search) => {
     try {
@@ -18,7 +19,10 @@ export default function SwipeableTemporaryDrawer() {
       const { data } = await axios.get(`http://localhost:5000/users/searchUser?search=${search}`);
       setSearchResult(data);
     } catch (error) {
-      
+      if(error.message === "Network Error") {
+        setError(error.message);
+        return;
+      }
     }
   }
   const toggleDrawer = (anchor, open) => (event) => {
@@ -43,7 +47,12 @@ export default function SwipeableTemporaryDrawer() {
         placeholder='rechercher ici'
       />
       <Divider />
-
+      {error && 
+        <div>
+          <div className='text-center font-bold'>{ error }</div>
+          <img src='/img/undraw_Warning_re_eoyh.png' alt="warning"/>
+        </div>
+      }
       {
         searchResult && searchResult.map((u) => (
           <div className='m-3 border border-indigo-200 p-2 rounded-lg' key={u._id}>

@@ -9,7 +9,7 @@ const DBConnection = () => {
 
     console.log('MongoDB connection etablished successfully');
   } catch (error) {
-    console.log(error.message);
+    console.log({error: "verifiez que vous avez une bonne connexion internet"});
     process.exit();
     }
 }

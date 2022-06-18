@@ -16,7 +16,8 @@ const useFetch = (url) => {
         setError(null);
       } catch (error) {  
         setIsPending(false) 
-        setError(error.response.data.message);   
+        setError('ouppppssss,impossible de charger les donnees,Verifiez bien que vous avez une bonne connexion internet');  
+        console.log(error)
       }
     })();
     return () => abortController.abort();

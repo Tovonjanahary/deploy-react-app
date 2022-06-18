@@ -1,5 +1,5 @@
 import { PhotoCamera } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconButton,Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
@@ -12,6 +12,15 @@ const AddPost = ({setuseDetails}) => {
   const [picture, setPicture] = useState('');
   const { userid } = useParams();
   const [error, setError] = useState(false);
+  const [isPending, setIsPending] = useState(true);
+
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   const { userInfo } = UserState();
 
   const classStyle = {
@@ -39,6 +48,7 @@ const AddPost = ({setuseDetails}) => {
       }
     });
     setuseDetails(data);
+    setIsPending(false);
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,8 +60,14 @@ const AddPost = ({setuseDetails}) => {
       getUserProfile();
       setPost({ description: "", image: "" });
       setPicture("");
+      setError("");
     } catch (error) {
+      if(error.message === "Network Error") {
+        setError(error.message);
+        return;
+      }
       setError(error.response.data.error);
+      setIsPending(false);
     }
   }
 
@@ -75,7 +91,6 @@ const AddPost = ({setuseDetails}) => {
           id="description"
           className={classStyle.input}
           name="description"
-          required
           value={post.description}
           onChange={handleChange}
         ></textarea>
@@ -92,9 +107,22 @@ const AddPost = ({setuseDetails}) => {
         </label>
       </div>
       { picture && <img src={ picture && picture } alt="post pic" width="100px" height="100px"/> }
-      { error && <div className='text-danger'>{ error }</div>}
+      {error && 
+        <Alert severity="error">
+          <AlertTitle>{ error }</AlertTitle>
+        </Alert>
+      }
+      { isPending && 
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop> 
+      }
       <button type="submit"
-        className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4">
+        className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
         Publier
       </button>
     </form>

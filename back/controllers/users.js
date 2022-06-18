@@ -67,7 +67,7 @@ const userController = {
       if(!data) return res.status(404).json({ error: "donnee introuvable"});
       return res.status(200).json(data);
     } catch (error) {
-      return res.status(404).json("error:" + error.message);
+      return res.status(500).json({error : "impossible de charger les donnees"});
     }
   },
   searchUser: async (req, res) => {

@@ -1,13 +1,23 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
 
 const Signup = () => {
 
   const [newUser, setNewUser] = useState({ name: '', firstName: '', email: '', phone: '', adresse: '', birthdate: '', photo: '', password: '' });
   const [error, setError] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const [picture, setPicture] = useState('');
   const history = useHistory();
+
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,8 +34,14 @@ const Signup = () => {
 
     const { data } = await axios.post('http://localhost:5000/users/addUser', formData);
     localStorage.setItem("userLogin", JSON.stringify(data));
-      history.push("/");
+    history.push("/");
+    setIsPending(false);
     } catch (error) {
+      setIsPending(false);
+      if(error.message === "Network Error") {
+        setError(error.message);
+        return;
+      }
     setError(error.response.data.error);
     }    
   }
@@ -169,9 +185,22 @@ const Signup = () => {
             name="image"
             onChange={handlePhoto}
           />
-          { error && <div className='text-danger'>{ error }</div>}
+          {error && 
+              <Alert severity="error">
+                <AlertTitle>{ error }</AlertTitle>
+              </Alert>
+          }
+          { isPending && 
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            onClick={handleClose}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop> 
+          }
           <button type="submit"
-            className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4">
+            className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
             Enregistrer
           </button>
         </form>

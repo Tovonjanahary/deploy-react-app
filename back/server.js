@@ -19,9 +19,9 @@ app.use(postRouter);
 app.use(userJobRouter);
 
 // deployement
-if(process.env.NODE_ENV === "production") {
+if(process.env.NODE_ENV === "developpement") {
   app.use(express.static(path.join(__dirname, '..',"build")));
-  
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..',"build",'index.html'));
   });

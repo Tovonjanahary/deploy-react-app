@@ -1,3 +1,4 @@
+import { Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +8,17 @@ const Signup = () => {
 
   const [newUser, setNewUser] = useState({ email: '', password: '' });
   const [error, setError] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const history = useHistory();
+  
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -17,7 +28,13 @@ const Signup = () => {
       });
       localStorage.setItem("userLogin", JSON.stringify(data));
       window.location.href = "/";
+      setIsPending(false);
     } catch (error) {
+      setIsPending(false);
+      if(error.message === "Network Error") {
+        setError(error.message);
+        return;
+      }
       setError(error.response.data?.error);
     }
   }
@@ -49,7 +66,7 @@ const Signup = () => {
           <p className="text-indigo-500 text-xl uppercase tracking-wider mb-3">
             Connexion
           </p>
-          <form className="shadow-xl px-5 py-5" onSubmit={handleSubmit}>
+          <form className="shadow-xl px-5 py-5" onSubmit={handleSubmit} style={{width: "500px"}}>
             <label className={classStyle.label} htmlFor="description">
               Email
             </label>
@@ -72,9 +89,22 @@ const Signup = () => {
               value={newUser.password}
               onChange={handleChange}
             />
-            {error && <div className='text-danger'>{error}</div>}
+            {error && 
+              <Alert severity="error">
+                <AlertTitle>{ error }</AlertTitle>
+              </Alert>
+            }
+            { isPending && 
+            <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={open}
+              onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop> 
+            }
             <button type="submit"
-              className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4">
+              className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
               Connexion
             </button>
             <div className='pt-5'>Vous n'avez pas de compte? <Link to="/user/signup">S'inscrire</Link></div>
