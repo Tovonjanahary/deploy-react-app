@@ -7,6 +7,7 @@ const postRouter = require('./routes/postRoutes');
 const userJobRouter = require('./routes/userJobRoutes');
 require('dotenv').config();
 const DBConnection = require('./config/DBConnection');
+
 // connect to the database
 DBConnection();
 
@@ -18,12 +19,17 @@ app.use(postRouter);
 app.use(userJobRouter);
 
 // deployement
-app.use(express.static(path.join(__dirname, '..',"build")))
-
-app.get('*', function (req, res) {app.use(express.json());
-
-  res.sendFile(path.join(__dirname, '..',"build",'index.html'));
-});
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '..',"build")));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '..',"build",'index.html'));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("api is running successfuly");
+  })
+}
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

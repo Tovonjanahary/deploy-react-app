@@ -39,7 +39,7 @@ export default function SwipeableTemporaryDrawer() {
       role="presentation"
       className = "p-2"
     >
-      <input type="text" onChange={(e) => searchUser(e.target.value)} className="ml-2 focus:outline-none border-b-2 border-gray-200 p-2"
+      <input type="text" onChange={(e) => searchUser(e.target.value)} className="ml-2 focus:outline-none border-b-2 border-gray-200 p-2 w-full"
         placeholder='rechercher ici'
       />
       <Divider />
