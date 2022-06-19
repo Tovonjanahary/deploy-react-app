@@ -16,7 +16,7 @@ export default function SwipeableTemporaryDrawer() {
       if(search === '') {
         return setSearchResult([]);
       }
-      const { data } = await axios.get(`http://localhost:5000/users/searchUser?search=${search}`);
+      const { data } = await axios.get(`https://e-couloirs.herokuapp.com/searchUser?search=${search}`);
       setSearchResult(data);
     } catch (error) {
       if(error.message === "Network Error") {

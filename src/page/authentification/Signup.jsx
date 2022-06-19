@@ -23,7 +23,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    const { data } = await axios.post('http://localhost:5000/users/addUser', { ...newUser, photo: photo });
+    const { data } = await axios.post('https://e-couloirs.herokuapp.com/users/addUser', { ...newUser, photo: photo });
     localStorage.setItem("userLogin", JSON.stringify(data));
     history.push("/");
     setIsPending(false);

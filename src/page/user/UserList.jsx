@@ -5,7 +5,7 @@ import { UserState } from '../../context/GlobalState';
 
 const Service = () => {
 
-  const { data, error, isPending } = useFetch("http://localhost:5000/users/getUser");
+  const { data, error, isPending } = useFetch("https://e-couloirs.herokuapp.com/users/getUser");
   const { userInfo } = UserState();
 
   return (

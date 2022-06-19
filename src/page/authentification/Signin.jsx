@@ -22,7 +22,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5000/users/signin', {
+      const { data } = await axios.post('https://e-couloirs.herokuapp.com/users/signin', {
         email: newUser.email,
         password: newUser.password
       });

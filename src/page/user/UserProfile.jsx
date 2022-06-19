@@ -29,7 +29,7 @@ const UserProfile = () => {
     try {
       const abortController = new AbortController();
       (async function getUserProfile() {
-        const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
+        const { data } = await axios.get(`https://e-couloirs.herokuapp.com/users/getSingleUser/${userid}`, {
           headers: {
             Authorization: `Bearer ${userInfo.token}`
           }
