@@ -37,7 +37,7 @@ const Post = ({ user }) => {
                 </IconButton>
               </div>  
               <div className='text-xs'>{moment(u.createdAt).locale('fr', localization).fromNow()}</div>
-              <img src={`/img/${u.image}`} alt="service" width="100%" height="100%" className="mt-2 m-auto border-2 border-white" />
+              <img src={u.image} alt="service" width="100%" height="100%" className="mt-2 m-auto border-2 border-white" />
             </div>
           ))
         }

@@ -8,8 +8,8 @@ import { styled } from '@mui/material/styles';
 
 const AddPost = ({setuseDetails}) => {
 
-  const [post, setPost] = useState({ description: "", image: "" });
-  const [picture, setPicture] = useState('');
+  const [post, setPost] = useState({ description: "" });
+  const [image, setImage] = useState('');
   const { userid } = useParams();
   const [error, setError] = useState(false);
   const [isPending, setIsPending] = useState(true);
@@ -36,9 +36,25 @@ const AddPost = ({setuseDetails}) => {
     setPost({ ...post, [e.target.name]: e.target.value });
   }
 
-  const handlePhoto = (e) => {
-    setPost({ ...post, image: e.target.files[0] });
-    setPicture(URL.createObjectURL(e.target.files[0]));
+  const handlePhoto = (pic) => {
+    if (pic === undefined) {
+      console.log('selectionnez un fichier')
+      return;
+    }
+    const data = new FormData();
+    data.append("api_key", "577399692975353");
+    data.append("cloud_name", "tenzo");
+    data.append("file", pic);
+    data.append("upload_preset", "e-couloir");
+    fetch("https://api.cloudinary.com/v1_1/tenzo/image/upload", {
+      method: "post",
+      body: data,
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      setImage(data.url.toString());
+    });
+    setImage(URL.createObjectURL(pic));
   }
 
   async function getUserProfile() {
@@ -53,13 +69,10 @@ const AddPost = ({setuseDetails}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('description', post.description);
-      formData.append('image', post.image);
-      await axios.post(`http://localhost:5000/service/addPost/${userid}`, formData);
+      await axios.post(`http://localhost:5000/service/addPost/${userid}`, { ...post, image: image });
       getUserProfile();
-      setPost({ description: "", image: "" });
-      setPicture("");
+      setPost({ description: "" });
+      setImage("");
       setError("");
     } catch (error) {
       if(error.message === "Network Error") {
@@ -84,10 +97,10 @@ const AddPost = ({setuseDetails}) => {
       </div>
       <div>
         <label className={classStyle.label} htmlFor="description">
-          Description
+          POST
         </label>
         <textarea aria-label="Description de métier"
-          type="text" placeholder="Decrire votre métier"
+          type="text" placeholder="Ecrivez ici..."
           id="description"
           className={classStyle.input}
           name="description"
@@ -98,15 +111,16 @@ const AddPost = ({setuseDetails}) => {
       <div>
         <label htmlFor="icon-button-file">
           <Input accept="image/*" id="icon-button-file" type="file"
-            onChange={handlePhoto}
+            onChange={(e) => handlePhoto(e.target.files[0])}
             name="image"
            />
           <IconButton color="primary" aria-label="upload picture" component="span">
             <PhotoCamera />
           </IconButton>
+          Ajouter une photo
         </label>
       </div>
-      { picture && <img src={ picture && picture } alt="post pic" width="100px" height="100px"/> }
+      { image && <img src={ image && image } alt="post pic" width="100px" height="100px"/> }
       {error && 
         <Alert severity="error">
           <AlertTitle>{ error }</AlertTitle>

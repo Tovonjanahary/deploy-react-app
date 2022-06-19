@@ -15,8 +15,6 @@ const EditUser = ({ open, handleClose, setuseDetails }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 600,
-    height: 400,
     bgcolor: 'background.paper',
     border: ' border border-indigo-200',
     boxShadow: 24,
@@ -91,14 +89,14 @@ const EditUser = ({ open, handleClose, setuseDetails }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} className="overflow-auto rounded-lg p-2">
+      <Box sx={style} className="overflow-auto rounded-lg p-2 w-full container md:w-2/4">
         <h6 className="sticky top-0 bg-white text-sm p-1 flex items-center justify-between font-medium">
           <div className=" flex items-center"><EditIcon/> modification du profil</div>
           <IconButton aria-label="close" onClick={handleClose}>
             <CloseIcon/>
           </IconButton>
         </h6>
-        <form className="shadow-xl px-5 py-5 mt-2" encType='multipart/form-data' onSubmit={handleSubmit}>
+        <form className="shadow-xl px-5 py-5 mt-2" onSubmit={handleSubmit}>
           <div className="flex flex-wrap -mx-3 mb-6">
             <input aria-label="Enter name"
               type="text" placeholder="Name"

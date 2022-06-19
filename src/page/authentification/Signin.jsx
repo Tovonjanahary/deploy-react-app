@@ -60,13 +60,12 @@ const Signup = () => {
   };
 
   return (
-      <div className="create-service bg-white">
-        <div className="flex flex-col
-					items-center justify-center">
-          <p className="text-indigo-500 text-xl uppercase tracking-wider mb-3">
+      <div className="bg-white m-auto md:max-w-2xl w-full container">
+        <div className="flex flex-col mt-5">
+          <p className="text-indigo-500 text-xl uppercase tracking-wider mb-3 text-center">
             Connexion
           </p>
-          <form className="shadow-xl px-5 py-5" onSubmit={handleSubmit} style={{width: "500px"}}>
+          <form className="shadow-xl px-5 py-5" onSubmit={handleSubmit}>
             <label className={classStyle.label} htmlFor="description">
               Email
             </label>
@@ -107,7 +106,8 @@ const Signup = () => {
               className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
               Connexion
             </button>
-            <div className='pt-5'>Vous n'avez pas de compte? <Link to="/user/signup">S'inscrire</Link></div>
+            <div className='pt-5'>Vous n'avez pas de compte? <Link to="/user/signup">
+              <span className='text-red-600 font-bold'>Inscrivez-vous</span></Link></div>
           </form>
         </div>
       </div>

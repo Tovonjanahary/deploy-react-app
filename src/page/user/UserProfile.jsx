@@ -23,7 +23,7 @@ const UserProfile = () => {
   const handleClose = () => setOpen(false);
   const { path, url } = useRouteMatch();
   const currentUser = userInfo._id === userid;
-  const [imgSrc, setImgSrc] = useState(`/img/${userInfo.photo}`);
+  const [ imgSrc, setImgSrc] = useState(userDetails && userDetails.photo);
 
   useEffect(() => {
     try {
@@ -38,11 +38,11 @@ const UserProfile = () => {
         setuseDetails(data);
       })();
 
-    return () => abortController.abort();
+      return () => abortController.abort();
     } catch (error) {
       console.log(error);
     }
-    
+
   }, [userid, userInfo]);
 
   return (
@@ -51,11 +51,11 @@ const UserProfile = () => {
         <div className="">
           <div className="flex flex-row justify-center items-center pt-3">
             <section>
-              <img src={imgSrc} onError = {() => setImgSrc("/img/img.png")} alt={userDetails.name} width="150px" height="150px" style={{ borderRadius: "50%" }} className="mt-2 m-auto border-2 border-white" />
-              <section>
-                <div className='flex flex-row items-center w-96 justify-between mt-3'>
+              <img src={imgSrc} onError={() => setImgSrc("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")}alt={userDetails.name} width="150px" height="150px" style={{ borderRadius: "50%" }} className="mt-2 m-auto border-2 border-white" />
+              <section className='flex items-center justify-center'>
+                <div className='flex flex-wrap items-center justify-center md:justify-between lg:justify-between mt-3'>
                   <section>
-                    <h4 className='font-semibold text-2xl'>{userDetails.name} {userDetails.firstName}</h4>
+                    <h4 className='text-base md:font-semibold text-2xl'>{userDetails.name} {userDetails.firstName}</h4>
                     <p className='text-base text-grey'>{userDetails.jobTitle}</p>
                   </section>
                   {
@@ -80,7 +80,7 @@ const UserProfile = () => {
                               <Link to={`/services/inscription/${userDetails._id}`}>Completez votre profil</Link>
                             </Button>
                           </> :
-                          <Button variant="outlined" startIcon={<AddTaskIcon />}>
+                          <Button variant="outlined" startIcon={<AddTaskIcon />} className="flex items-center justfy-between">
                             Votre profil est a jour
                           </Button>
                       }
@@ -89,20 +89,19 @@ const UserProfile = () => {
                       Contacter
                     </Button>
                 }
-
               </section>
-              <div className="container ml-5 flex flex-row justify-between mt-4 w-96 font-bold pb-2">
-                <Link to={`${url}`}>Post</Link>
-                <Link to={`${url}/AboutUser`}>A propos</Link>
-                <Link to={`${url}/photo`}>Photos</Link>
-                <Link to={`${url}/Contact`}>Me contacter</Link>
+              <div className="container flex flex-wrap items-center justify-center lg:justify-between flex mt-4 lg:w-96 font-bold pb-2">
+                <Link to={`${url}`} className="mx-2.5">Post</Link>
+                <Link to={`${url}/AboutUser`} className="mx-2.5">A propos</Link>
+                <Link to={`${url}/photo`} className="mx-2.5">Photos</Link>
+                <Link to={`${url}/Contact`} className="mx-2.5">Me contacter</Link>
               </div>
             </section>
           </div>
         </div>
       </div>
-      <div className="mt-2 p-5 box-border max-w-5xl m-auto flex items-start">
-        <section className='flex-auto w-64 rounded-md'>
+      <div className="mt-2 p-5 box-border m-auto flex flex-col items-center justify-center flex-col-reverse md:max-w-4xl lg:max-w-5xl md:flex-row md:items-start">
+        <section className='flex-auto w-full rounded-md mt-4 md:mt-0 md:w-96 md:mr-5'>
           <Switch>
             <Route exact path={`${path}`}>
               <Post user={userDetails} />
@@ -112,15 +111,15 @@ const UserProfile = () => {
             <Route path={`${path}/Contact`} component={Contact} />
           </Switch>
         </section>
-        <section className='bg-white flex-auto w-32 ml-5 rounded-md p-3 sticky top-20 border border-indigo-200'>
+        <section className='bg-white flex-auto w-full rounded-md p-3 lg:sticky top-7 border border-indigo-200 lg:block md:w-64'>
           {
-            currentUser ? <AddPost setuseDetails={setuseDetails}/>
-            : <Suggestion/>
+            currentUser ? <AddPost setuseDetails={setuseDetails} />
+              : <Suggestion />
           }
-          
+
         </section>
       </div>
-      <EditUser open={open} handleClose={handleClose} userDetails={userDetails && userDetails} setuseDetails={setuseDetails}/>
+      <EditUser open={open} handleClose={handleClose} userDetails={userDetails && userDetails} setuseDetails={setuseDetails} />
     </div>
   )
 }

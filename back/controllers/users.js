@@ -12,8 +12,7 @@ const generateToken = (id) => {
 const userController = {
   addUser: async (req, res) => {
     try {
-      const { name, firstName, email, birthdate, phone, adresse, password } = req.body;
-      const photo = req.file?.filename;
+      const { name, firstName, email, photo, birthdate, phone, adresse, password } = req.body;
       const errMsg = userValidation(name, firstName, email, birthdate, phone, adresse, password);
       if (errMsg) return res.status(406).json({ error: errMsg });
       const userExist = await User.findOne({ email });

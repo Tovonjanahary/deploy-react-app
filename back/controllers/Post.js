@@ -23,8 +23,7 @@ const service = {
   },
   addPost: async (req, res) => {
     try {
-      const { description } = req.body;
-      const image = req.file?.filename;
+      const { description, image } = req.body;
       const errMsg = serviceValidation(description);
       if(errMsg) return res.status(406).json({ error: errMsg });
       let userId = req.params.id;
