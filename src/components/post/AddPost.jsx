@@ -13,7 +13,7 @@ const AddPost = ({setuseDetails}) => {
   const { userid } = useParams();
   const [error, setError] = useState(false);
   const [isPending, setIsPending] = useState(true);
-
+  const [loadingPic, setLoadingPic] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -37,6 +37,7 @@ const AddPost = ({setuseDetails}) => {
   }
 
   const handlePhoto = (pic) => {
+    setLoadingPic(true);
     if (pic === undefined) {
       console.log('selectionnez un fichier')
       return;
@@ -53,12 +54,14 @@ const AddPost = ({setuseDetails}) => {
     .then((res) => res.json())
     .then((data) => {
       setImage(data.url.toString());
+      console.log(data.url.toString());
+      setLoadingPic(false);
     });
     setImage(URL.createObjectURL(pic));
   }
 
   async function getUserProfile() {
-    const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
+    const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`
       }
@@ -69,7 +72,7 @@ const AddPost = ({setuseDetails}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/service/addPost/${userid}`, { ...post, image: image });
+      await axios.post(`/service/addPost/${userid}`, { ...post, image: image });
       getUserProfile();
       setPost({ description: "" });
       setImage("");
@@ -96,9 +99,6 @@ const AddPost = ({setuseDetails}) => {
         </div>
       </div>
       <div>
-        <label className={classStyle.label} htmlFor="description">
-          POST
-        </label>
         <textarea aria-label="Description de métier"
           type="text" placeholder="Ecrivez ici..."
           id="description"
@@ -135,10 +135,21 @@ const AddPost = ({setuseDetails}) => {
         <CircularProgress color="inherit" />
       </Backdrop> 
       }
-      <button type="submit"
-        className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
-        Publier
-      </button>
+      {
+        loadingPic ? (
+          <button
+            className="bg-indigo-200 py-2 rounded-bl-lg w-full mt-4" disabled>
+            Chargement de l'image...
+          </button>
+        ) :
+        (
+          <button type="submit"
+            className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
+            Publier
+          </button>
+        )
+      }
+      
     </form>
   )
 }

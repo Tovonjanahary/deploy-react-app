@@ -5,11 +5,11 @@ import { UserState } from '../../context/GlobalState';
 
 const Service = () => {
 
-  const { data, error, isPending } = useFetch("https://e-couloirs.herokuapp.com/users/getUser");
+  const { data, error, isPending } = useFetch("/users/getUser");
   const { userInfo } = UserState();
 
   return (
-    <div className="container max-w-xs box-border m-auto bg-gray-white flex flex-wrap items-center justify-center md:justify-center md:flex-row md:items-start md:flex-nowrap md:max-w-4xl">
+    <div className="container max-w-xs box-border m-auto bg-white flex flex-wrap items-center justify-center md:justify-center md:flex-row md:items-start md:flex-nowrap md:max-w-4xl">
       <div className="sm:max-w-xl lg:max-w-full mx-0 lg:py-5 lg:px-5 text-xs flex-auto w-32">
         <div className="xl:max-w-lg xl:ml-auto">
           {error && 

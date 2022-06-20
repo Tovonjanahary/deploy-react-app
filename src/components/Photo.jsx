@@ -1,53 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 import axios from 'axios';
 import { UserState } from '../context/GlobalState';
 import { useParams } from 'react-router-dom';
-
-function srcset(image, size, rows = 1, cols = 1) {
-  return {
-    src: `/img/${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-    srcSet: `/img/${image}?w=${size * cols}&h=${
-      size * rows
-    }&fit=crop&auto=format&dpr=2 2x`,
-  };
-}
+import Skeleton from '@mui/material/Skeleton';
 
 const Photo = () => {
   const { userInfo } = UserState();
   const { userid } = useParams();
   const [userDetails, setuseDetails] = useState('');
-
-
+  const [pending, setIsPending] = useState(false);
   useEffect(() => {
     (async function getUserProfile() {
-      const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
+      setIsPending(true);
+      const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`
         }
       }
       )
       setuseDetails(data);
+      setIsPending(false);
     })();
   }, [userid, userInfo]);
+
   return (
-    <ImageList
-      sx={{ width: 500, height: 450 }}
-      variant="quilted"
-      cols={4}
-      rowHeight={121}
-    >
+    <section className='flex flex-row flex-wrap w-full mx-auto'>
+      { pending && 
+        <section className='flex flex-row flex-wrap w-full mx-auto'>
+          <Skeleton variant="rectangular" width={128} height={132} className='ml-1 mt-1'/>
+          <Skeleton variant="rectangular" width={128} height={132} className='ml-1 mt-1'/>
+          <Skeleton variant="rectangular" width={128} height={132} className='ml-1 mt-1'/>
+          <Skeleton variant="rectangular" width={128} height={132} className='ml-1 mt-1'/>
+        </section>}
       {userDetails && userDetails.post.map((item) => (
-        <ImageListItem key={item.image} cols={item.cols || 1} rows={item.rows || 1}>
           <img
-            {...srcset(item.image, 160, item.rows, item.cols)}
+            key={item._id}
             alt="post pic"
+            src={item.image}
             loading="lazy"
+            className='w-32'
           />
-        </ImageListItem>
       ))}
-    </ImageList>
+    </section>
   )
 }
 

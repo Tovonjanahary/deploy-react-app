@@ -8,7 +8,7 @@ import Loader from './Loader';
 import { Avatar } from '@mui/material';
 
 const Suggestion = () => {
-  const { data, isPending } = useFetch('https://e-couloirs.herokuapp.com/users/getUser');
+  const { data, isPending } = useFetch('/users/getUser');
   const { userid } = useParams();
   const { userInfo } = UserState();
 

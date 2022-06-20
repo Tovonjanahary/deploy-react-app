@@ -21,7 +21,6 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { userInfo } = UserState();
-  
   let user = localStorage.getItem('userLogin');
   
   const handleOpenNavMenu = (event) => {
@@ -51,7 +50,7 @@ const Navbar = () => {
             display: { xs: 'none', md: 'flex' }
           }}
         >
-          <img src="img/logo.svg" alt="e-couloir" />
+          <img src="/img/logo.svg" alt="e-couloir" />
         </Typography>
 
         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>

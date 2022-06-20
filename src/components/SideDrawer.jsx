@@ -5,22 +5,27 @@ import Divider from '@mui/material/Divider';
 import axios from 'axios';
 import { Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Skeleton from './Skeleton';
 
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = useState({ left: false });
   const [searchResult, setSearchResult] = useState([]);
   const [error, setError] = useState(false);
+  const[pending, setIsPending] = useState(false);
 
   const searchUser = async (search) => {
     try {
       if(search === '') {
         return setSearchResult([]);
       }
-      const { data } = await axios.get(`https://e-couloirs.herokuapp.com/searchUser?search=${search}`);
+      setIsPending(true);
+      const { data } = await axios.get(`/users/searchUser?search=${search}`);
       setSearchResult(data);
+      setIsPending(false);
     } catch (error) {
       if(error.message === "Network Error") {
         setError(error.message);
+        setIsPending(false);
         return;
       }
     }
@@ -53,6 +58,7 @@ export default function SwipeableTemporaryDrawer() {
           <img src='/img/undraw_Warning_re_eoyh.png' alt="warning"/>
         </div>
       }
+      { pending && <Skeleton/>}
       {
         searchResult && searchResult.map((u) => (
           <div className='m-3 border border-indigo-200 p-2 rounded-lg' key={u._id}>

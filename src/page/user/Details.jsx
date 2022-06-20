@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Details = () => {
   const { id } = useParams();
-  const { data: service, isPending, error } = useFetch('http://localhost:5000/users/getSingleUser/' + id);
+  const { data: service, isPending, error } = useFetch('/users/getSingleUser/' + id);
 
   return (
     <div className="shadow-xl">

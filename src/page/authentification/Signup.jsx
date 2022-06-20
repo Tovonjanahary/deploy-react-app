@@ -11,7 +11,7 @@ const Signup = () => {
   const [picture, setPicture] = useState('');
   const history = useHistory();
   const [photo, setPhoto] = useState();
- 
+  const [loadingPic, setLoadingPic] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -23,7 +23,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    const { data } = await axios.post('https://e-couloirs.herokuapp.com/users/addUser', { ...newUser, photo: photo });
+    const { data } = await axios.post('/users/addUser', { ...newUser, photo: photo });
     localStorage.setItem("userLogin", JSON.stringify(data));
     history.push("/");
     setIsPending(false);
@@ -43,6 +43,7 @@ const Signup = () => {
   }
 
   const handlePhoto = (pic) => {
+    setLoadingPic(true);
     if (pic === undefined) {
       console.log('selectionnez un fichier')
       return;
@@ -59,7 +60,7 @@ const Signup = () => {
     .then((res) => res.json())
     .then((data) => {
       setPhoto(data.url.toString());
-      console.log(data.url.toString())
+      setLoadingPic(false);
     });
     setPicture(URL.createObjectURL(pic));
   }
@@ -207,10 +208,19 @@ const Signup = () => {
             <CircularProgress color="inherit" />
           </Backdrop> 
           }
-          <button type="submit"
-            className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
-            Enregistrer
-          </button>
+          {
+            loadingPic ? (
+              <button type="submit" disabled
+                className="bg-indigo-200 py-2 rounded-bl-lg w-full mt-4">
+                chargement de l'image...
+              </button>
+            ) : (
+              <button type="submit"
+                className="bg-indigo-400 py-2 rounded-bl-lg w-full mt-4" onClick={handleToggle}>
+                Enregistrer
+              </button>
+            )
+          }
           <div className='pt-5'>Vous avez deja un compte? <Link to="/user/signin"><span className='text-red-600 font-bold'>Connectez-vous</span></Link> maintenant</div>
         </form>
       </div>

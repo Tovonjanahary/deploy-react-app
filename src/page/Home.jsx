@@ -19,7 +19,7 @@ const HomePage = () => {
             </Link>
           </div>
           <div className="w-full md:w-3/5 py-6 text-center">
-            <img className="w-full md:w-4/5 z-50" alt="background" src="../img/undraw_adventure_map_hnin.png" />
+            <img className="w-full md:w-4/5 z-50" alt="background" src="/img/undraw_adventure_map_hnin.png" />
           </div>
         </div>
       </div>

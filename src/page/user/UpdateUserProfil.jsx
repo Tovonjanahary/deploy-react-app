@@ -27,7 +27,7 @@ const Inscription = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const { data } = await axios.patch(`https://e-couloirs.herokuapp.com/completeProfile/${id}`, {...newService}, {
+      const { data } = await axios.patch(`/completeProfile/${id}`, {...newService}, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`
         }

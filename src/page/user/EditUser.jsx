@@ -27,7 +27,7 @@ const EditUser = ({ open, handleClose, setuseDetails }) => {
   const { userInfo } = UserState();
 
   const getUserProfile = async () => {
-    const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
+    const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`
       }
@@ -37,7 +37,7 @@ const EditUser = ({ open, handleClose, setuseDetails }) => {
 
   useEffect(() => {
     (async function getUserProfile() {
-      const { data } = await axios.get(`http://localhost:5000/users/getSingleUser/${userid}`, {
+      const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`
         }

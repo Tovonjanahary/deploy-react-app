@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link, Route, Switch, useParams, useRouteMatch } from 'react-router-dom'
+import { Link, Route, Switch, useParams, useRouteMatch, useLocation } from 'react-router-dom'
 import Contact from '../../components/Contact';
 import AboutUser from '../../components/AboutUser';
 import Post from '../../components/post/PostList.jsx';
@@ -13,6 +13,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import { UserState } from '../../context/GlobalState';
 import EditUser from '../user/EditUser';
 import Suggestion from '../../components/Suggestion';
+import Skeleton from '@mui/material/Skeleton';
 
 const UserProfile = () => {
   const { userInfo } = UserState();
@@ -23,13 +24,18 @@ const UserProfile = () => {
   const handleClose = () => setOpen(false);
   const { path, url } = useRouteMatch();
   const currentUser = userInfo._id === userid;
-  const [ imgSrc, setImgSrc] = useState(userDetails && userDetails.photo);
+  const location = useLocation();
 
+  const getColor = (curr) => {
+    if (location.pathname === curr) {
+      return 'border-b-2 border-sky-600';
+    }
+  }
   useEffect(() => {
     try {
       const abortController = new AbortController();
       (async function getUserProfile() {
-        const { data } = await axios.get(`https://e-couloirs.herokuapp.com/users/getSingleUser/${userid}`, {
+        const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
           headers: {
             Authorization: `Bearer ${userInfo.token}`
           }
@@ -51,7 +57,17 @@ const UserProfile = () => {
         <div className="">
           <div className="flex flex-row justify-center items-center pt-3">
             <section>
-              <img src={imgSrc} onError={() => setImgSrc("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg")}alt={userDetails.name} width="150px" height="150px" style={{ borderRadius: "50%" }} className="mt-2 m-auto border-2 border-white" />
+              {
+                !userDetails ? (
+                  <>
+                    <Skeleton variant="circular" width={150} height={150} className="mt-2 m-auto border-2 border-white"/>
+                    <Skeleton animation="wave" width={80} className="m-auto"/>
+                  </>
+                )
+                  : (
+                  <img src={userDetails.photo} alt={userDetails.name} width="150px" height="150px" style={{ borderRadius: "50%" }} className="mt-2 m-auto border-2 border-white" />
+                  )
+              }  
               <section className='flex items-center justify-center'>
                 <div className='flex flex-wrap items-center justify-center md:justify-between lg:justify-between mt-3'>
                   <section>
@@ -71,7 +87,7 @@ const UserProfile = () => {
               <section className='mt-2'>
                 {
                   currentUser ?
-                    <>
+                    <div className='flex flex-col items-center'>
                       {
                         userDetails && userDetails.jobTitle == null ?
                           <>
@@ -84,17 +100,17 @@ const UserProfile = () => {
                             Votre profil est a jour
                           </Button>
                       }
-                    </> :
-                    <Button variant="outlined" startIcon={<PhoneIcon />}>
+                    </div> :
+                    <Button variant="outlined" startIcon={<PhoneIcon />} className="m-auto w-full">
                       Contacter
                     </Button>
                 }
               </section>
               <div className="container flex flex-wrap items-center justify-center lg:justify-between flex mt-4 lg:w-96 font-bold pb-2">
-                <Link to={`${url}`} className="mx-2.5">Post</Link>
-                <Link to={`${url}/AboutUser`} className="mx-2.5">A propos</Link>
-                <Link to={`${url}/photo`} className="mx-2.5">Photos</Link>
-                <Link to={`${url}/Contact`} className="mx-2.5">Me contacter</Link>
+                <Link to={`${url}`} className={"ml-2 " + getColor(`${url}`)}>Post</Link>
+                <Link to={`${url}/AboutUser`} className={"ml-2 " + getColor(`${url}/AboutUser`)}>A propos</Link>
+                <Link to={`${url}/photo`} className={"ml-2 " + getColor(`${url}/photo`)}>Photos</Link>
+                <Link to={`${url}/Contact`} className={"ml-2 " + getColor(`${url}/Contact`)}>Me contacter</Link>
               </div>
             </section>
           </div>
