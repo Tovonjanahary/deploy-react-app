@@ -5,7 +5,7 @@ import { UserState } from '../../context/GlobalState';
 
 const Service = () => {
 
-  const { data, error, isPending } = useFetch("https://ecouloirs-api.vercel.app/users/getUser");
+  const { data, error, isPending } = useFetch("/users/getUser");
   const { userInfo } = UserState();
 
   return (
