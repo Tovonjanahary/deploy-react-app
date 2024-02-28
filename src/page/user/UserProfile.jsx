@@ -14,6 +14,7 @@ import { UserState } from '../../context/GlobalState';
 import EditUser from '../user/EditUser';
 import Suggestion from '../../components/Suggestion';
 import Skeleton from '@mui/material/Skeleton';
+import config from '../../config/config.js';
 
 const UserProfile = () => {
   const { userInfo } = UserState();
@@ -35,7 +36,7 @@ const UserProfile = () => {
     try {
       const abortController = new AbortController();
       (async function getUserProfile() {
-        const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
+        const { data } = await axios.get(`${config.apiUrl}/users/getSingleUser/${userid}`, {
           headers: {
             Authorization: `Bearer ${userInfo.token}`
           }
