@@ -23,7 +23,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${config}/users/signin`, {
+      const { data } = await axios.post(`${config.apiUrl}/users/signin`, {
         email: newUser.email,
         password: newUser.password
       });

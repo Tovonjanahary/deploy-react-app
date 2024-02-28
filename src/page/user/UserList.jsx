@@ -6,7 +6,7 @@ import config from '../../config/config';
 
 const Service = () => {
 
-  const { data, error, isPending } = useFetch(`${config}/users/getUser`);
+  const { data, error, isPending } = useFetch(`${config.apiUrl}/users/getUser`);
   const { userInfo } = UserState();
 
   return (
