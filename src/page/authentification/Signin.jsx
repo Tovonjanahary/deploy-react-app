@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import config from '../../config/config';
 
 const Signup = () => {
 
@@ -22,7 +23,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/users/signin', {
+      const { data } = await axios.post(`${config}/users/signin`, {
         email: newUser.email,
         password: newUser.password
       });

@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import Skeleton from '../../components/Skeleton';
 import useFetch from '../../components/useFetch'
 import { UserState } from '../../context/GlobalState';
+import config from '../../config/config';
 
 const Service = () => {
 
-  const { data, error, isPending } = useFetch("https://ecouloirs-api.vercel.app/users/getUser");
+  const { data, error, isPending } = useFetch(`${config}/users/getUser`);
   const { userInfo } = UserState();
 
   return (
