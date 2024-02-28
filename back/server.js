@@ -12,9 +12,7 @@ const DBConnection = require('./config/DBConnection');
 DBConnection();
 
 // middleware
-app.use(cors({
-  origin: 'https://ecouloirs-api.vercel.app'
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(userRouter);
