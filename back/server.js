@@ -22,21 +22,21 @@ app.use(postRouter);
 app.use(userJobRouter);
 
 // deployement
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, '..', "build")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, '..', "build")));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', "build", 'index.html'), function (err) {
-      if (err) {
-        res.status(500).send(err)
-      }
-    });
-  });
-} else {
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '..', "build", 'index.html'), function (err) {
+//       if (err) {
+//         res.status(500).send(err)
+//       }
+//     });
+//   });
+// } else {
   app.get("/", (req, res) => {
-    res.send("api is running successfuly");
+    res.send("api is running successfuly badass");
   })
-}
+// }
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
