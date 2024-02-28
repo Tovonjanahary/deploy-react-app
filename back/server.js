@@ -13,7 +13,7 @@ DBConnection();
 
 // middleware
 app.use(cors({
-  origin: 'https://ecouloirs-api.vercel.app/users/getUser'
+  origin: 'https://ecouloirs-api.vercel.app'
 }));
 
 app.use(express.json());
