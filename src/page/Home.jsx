@@ -9,7 +9,7 @@ const HomePage = () => {
           <div className="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
             <p className="uppercase tracking-loose w-full">Vous cherchez des services ?</p>
             <h1 className="my-4 text-5xl font-bold text-gray-400 leading-tight">
-              Découvrez notre nouvelle solution digitale ! 😃
+              Découvrez notre nouvelle solution digitale pouaaa! 😃
             </h1>
             <p className="leading-normal text-2xl mb-8">
               Touvez ici des plusieurs secteurs d'activité basés à Fianarantsoa.
