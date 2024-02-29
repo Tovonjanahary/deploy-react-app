@@ -12,7 +12,7 @@ const DBConnection = require('./config/DBConnection');
 DBConnection();
 
 const corsOpts = {
-  "origin": "https://ecouloirs-api.vercel.app"
+  "origin": "*"
 };
 // middleware
 app.use(cors(corsOpts));
@@ -35,7 +35,7 @@ app.use(userJobRouter);
 //   });
 // } else {
 app.get("/", (req, res) => {
-  res.send("api is running successfuly badass");
+  res.send("api is running successfuly badassss");
 })
 // }
 
