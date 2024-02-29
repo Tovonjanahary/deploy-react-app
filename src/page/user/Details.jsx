@@ -1,10 +1,11 @@
 import useFetch from '../../components/useFetch';
 import { useParams } from "react-router";
 import { Link } from 'react-router-dom';
+import config from '../../config/config';
 
 const Details = () => {
   const { id } = useParams();
-  const { data: service, isPending, error } = useFetch('/users/getSingleUser/' + id);
+  const { data: service, isPending, error } = useFetch(`${config.apiUrl}/users/getSingleUser/` + id);
 
   return (
     <div className="shadow-xl">

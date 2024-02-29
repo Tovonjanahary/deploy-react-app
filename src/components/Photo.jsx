@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserState } from '../context/GlobalState';
 import { useParams } from 'react-router-dom';
 import Skeleton from '@mui/material/Skeleton';
+import config from '../config/config';
 
 const Photo = () => {
   const { userInfo } = UserState();
@@ -12,7 +13,7 @@ const Photo = () => {
   useEffect(() => {
     (async function getUserProfile() {
       setIsPending(true);
-      const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
+      const { data } = await axios.get(`${config.apiUrl}/users/getSingleUser/${userid}`, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`
         }

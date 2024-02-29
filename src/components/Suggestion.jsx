@@ -6,9 +6,10 @@ import { Link, useParams } from 'react-router-dom';
 import { UserState } from '../context/GlobalState';
 import Loader from './Loader';
 import { Avatar } from '@mui/material';
+import config from '../config/config';
 
 const Suggestion = () => {
-  const { data, isPending } = useFetch('/users/getUser');
+  const { data, isPending } = useFetch(`${config.apiUrl}/users/getUser`);
   const { userid } = useParams();
   const { userInfo } = UserState();
 

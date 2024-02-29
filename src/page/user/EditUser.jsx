@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import { UserState } from '../../context/GlobalState';
+import config from '../../config/config';
 
 const EditUser = ({ open, handleClose, setuseDetails }) => {
 
@@ -27,7 +28,7 @@ const EditUser = ({ open, handleClose, setuseDetails }) => {
   const { userInfo } = UserState();
 
   const getUserProfile = async () => {
-    const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
+    const { data } = await axios.get(`${config.apiUrl}/users/getSingleUser/${userid}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`
       }

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { UserState } from '../../context/GlobalState';
+import config from '../../config/config';
 
 const Inscription = () => {
   const [newService, setNewService] = useState({ jobTitle: "", categorie: "", sous_categorie: "", description: "", site_web: "", ville: ""
@@ -27,7 +28,7 @@ const Inscription = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      const { data } = await axios.patch(`/completeProfile/${id}`, {...newService}, {
+      const { data } = await axios.patch(`${config.apiUrl}/completeProfile/${id}`, {...newService}, {
         headers: {
           Authorization: `Bearer ${userInfo.token}`
         }

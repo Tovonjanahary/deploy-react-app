@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Alert, AlertTitle, Backdrop, CircularProgress } from '@mui/material';
 import { Link } from 'react-router-dom';
+import config from '../../config/config';
 
 const Signup = () => {
   const [newUser, setNewUser] = useState({ name: '', firstName: '', email: '', phone: '', adresse: '', birthdate: '', password: '' });
@@ -23,7 +24,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    const { data } = await axios.post('/users/addUser', { ...newUser, photo: photo });
+    const { data } = await axios.post(`${config.apiUrl}/users/addUser`, { ...newUser, photo: photo });
     localStorage.setItem("userLogin", JSON.stringify(data));
     history.push("/");
     setIsPending(false);

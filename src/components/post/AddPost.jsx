@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { UserState } from '../../context/GlobalState';
 import { styled } from '@mui/material/styles';
+import config from '../../config/config';
 
 const AddPost = ({setuseDetails}) => {
 
@@ -61,7 +62,7 @@ const AddPost = ({setuseDetails}) => {
   }
 
   async function getUserProfile() {
-    const { data } = await axios.get(`/users/getSingleUser/${userid}`, {
+    const { data } = await axios.get(`${config.apiUrl}/users/getSingleUser/${userid}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`
       }
@@ -72,7 +73,7 @@ const AddPost = ({setuseDetails}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`/service/addPost/${userid}`, { ...post, image: image });
+      await axios.post(`${config.apiUrl}/service/addPost/${userid}`, { ...post, image: image });
       getUserProfile();
       setPost({ description: "" });
       setImage("");

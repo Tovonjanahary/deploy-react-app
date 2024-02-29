@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Avatar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Skeleton from './Skeleton';
+import config from '../config/config';
 
 export default function SwipeableTemporaryDrawer() {
   const [state, setState] = useState({ left: false });
@@ -19,7 +20,7 @@ export default function SwipeableTemporaryDrawer() {
         return setSearchResult([]);
       }
       setIsPending(true);
-      const { data } = await axios.get(`/users/searchUser?search=${search}`);
+      const { data } = await axios.get(`${config.apiUrl}/users/searchUser?search=${search}`);
       setSearchResult(data);
       setIsPending(false);
     } catch (error) {
